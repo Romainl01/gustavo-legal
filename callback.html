@@ -1,0 +1,28 @@
+---
+layout: null
+---
+<!doctype html>
+<meta charset="utf-8">
+<title>Connexion en cours…</title>
+<style>
+  body{font-family:system-ui,sans-serif;display:grid;place-items:center;height:100vh;margin:0;color:#101E33}
+  p{max-width:34ch;text-align:center;line-height:1.5}
+  code{background:#EAEFF5;padding:2px 6px;border-radius:4px}
+</style>
+<p id="msg">Connexion en cours, cette page va se fermer…</p>
+<script>
+  // TikTok n'accepte pas http://localhost comme redirect URI. Cette page sert de
+  // rebond : elle est hébergée sur un domaine vérifié, et renvoie le code
+  // d'autorisation vers Gustavo, qui écoute en local.
+  //
+  // Le code ne transite que dans le navigateur de l'utilisateur — aucun serveur
+  // ne le voit. Il est à usage unique et expire en quelques minutes.
+  var PORT = 7391;
+  var cible = 'http://localhost:' + PORT + '/callback' + window.location.search;
+  if (window.location.search) {
+    window.location.replace(cible);
+  } else {
+    document.getElementById('msg').textContent =
+      "Rien à transmettre : cette page n'est utile qu'à la fin d'une connexion TikTok.";
+  }
+</script>
